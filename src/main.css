@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+#three-canvas {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+/* .sections {
+  position: relative;
+  z-index: 5;
+} */
+
+.section {
+  padding: 5rem;
+  height: 100vh;
+}
+
+.section h2 {
+  font-size: 10vmin;
+}
+
+.section:nth-child(odd) {
+  text-align: right;
+}
+
+.loading {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  transition: all 2s;
+}
