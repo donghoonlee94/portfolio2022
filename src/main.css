@@ -9,6 +9,23 @@ a {
   color: inherit;
 }
 
+a:link {
+  text-decoration: none;
+  color: #3f464d;
+}
+a:visited {
+  text-decoration: none;
+  color: #3f464d;
+}
+a:active {
+  text-decoration: none;
+  color: #3f464d;
+}
+a:hover {
+  text-decoration: none;
+  color: tomato;
+  cursor: pointer;
+}
 body {
   overflow-y: hidden;
 }
@@ -84,6 +101,16 @@ img {
 
 .scroll-bottom-btn {
   transform: rotate(180deg);
+}
+
+.header-intro {
+  position: fixed;
+  top: 19px;
+  left: 80px;
+  display: block;
+  z-index: 10;
+  color: white;
+  font-size: 0.8rem;
 }
 
 .menu-btn {

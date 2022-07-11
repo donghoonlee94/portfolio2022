@@ -20,6 +20,7 @@ import {
   BackSide,
 } from 'three';
 import { menuAnimation } from './js/menu';
+import { textAnimation } from './js/text';
 import gsap from 'gsap';
 import lottie from 'lottie-web';
 
@@ -56,6 +57,7 @@ const setSection = () => {
   gsap.to(camera.position, {
     duration: 3,
     z: objectPositionsZ[currentSection],
+    ease: 'power2.inOut',
   });
 };
 
@@ -81,6 +83,7 @@ const loadingComplete = () => {
     opacity: 0,
     onComplete: () => {
       setTimeout(removeLoadingContainer, 2000);
+      textAnimation();
     },
   });
 };
