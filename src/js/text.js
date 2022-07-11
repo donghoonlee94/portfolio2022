@@ -6,7 +6,7 @@ gsap.registerPlugin(TextPlugin, RoughEase);
 
 const words = [
   '안녕하세요. 프론트엔드 개발자 이동훈입니다.',
-  '이 페이지는 WebGL을 사용하여 개발된 웹사이트입니다.',
+  '이 페이지는 WebGL을 사용하여 개발되었습니다.',
   '스크롤 및 우측 하단 버튼을 이용하여 화면을 이동할 수 있습니다.',
 ];
 

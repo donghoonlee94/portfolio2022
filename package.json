@@ -6,7 +6,8 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress",
     "start": "webpack serve --progress",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -32,5 +33,6 @@
     "gsap": "^3.10.4",
     "lottie-web": "^5.9.6",
     "three": "^0.142.0"
-  }
+  },
+  "homepage": "http://94hoon.portfolio/"
 }

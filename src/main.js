@@ -73,7 +73,7 @@ const loading = () => {
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: './js/loading-lottie.js',
+    path: './js/loading-lottie.json',
   });
 };
 
