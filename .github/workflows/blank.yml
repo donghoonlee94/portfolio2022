@@ -1,0 +1,20 @@
+name: deploy-to-s3-example
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: git clone
+        uses: actions/checkout@v2
+
+      - name: npm install
+        run: npm install
+
+      - name: build
+        run: npm run build
+
+      - name: deploy
