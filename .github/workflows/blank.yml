@@ -1,20 +1,34 @@
-name: deploy-to-s3-example
+name: github pages
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-18.04
     steps:
-      - name: git clone
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-      - name: npm install
-        run: npm install
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '12.x'
 
-      - name: build
-        run: npm run build
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: deploy
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
