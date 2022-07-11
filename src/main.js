@@ -19,6 +19,7 @@ import {
   AdditiveBlending,
   BackSide,
 } from 'three';
+import { menuAnimation } from './js/menu';
 import gsap from 'gsap';
 import lottie from 'lottie-web';
 
@@ -314,6 +315,7 @@ const init = () => {
 };
 
 init();
+menuAnimation();
 
 // 이벤트
 window.addEventListener('resize', setSize);
