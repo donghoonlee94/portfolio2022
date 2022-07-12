@@ -21,6 +21,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "core-js": "^3.23.3",
     "cross-env": "^7.0.3",
+    "dat.gui": "^0.7.9",
     "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "source-map-loader": "^4.0.0",

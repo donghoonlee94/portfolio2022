@@ -18,13 +18,18 @@ import {
   Points,
   AdditiveBlending,
   BackSide,
+  PointLight,
+  PointLightHelper,
 } from 'three';
 import { menuAnimation } from './js/menu';
 import { textAnimation } from './js/text';
 import gsap from 'gsap';
 import lottie from 'lottie-web';
+// import { Sky } from 'three/examples/jsm/objects/Sky';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+// import dat from 'dat.gui';
 
-let scene, camera, canvas, renderer, ambientLight, earth, cloud, loadingCompleted, universeMesh;
+let scene, camera, canvas, renderer, ambientLight, earth, cloud, loadingCompleted, universeMesh, pointLight;
 
 const secstions = document.querySelectorAll('.section');
 const lastSection = secstions[1];
@@ -121,6 +126,9 @@ const animateCubeParticles = () => {
 };
 
 const animate = () => {
+  pointLight.position.x = 500 * Math.sin(Date.now() / 5000);
+  pointLight.position.z = 500 * Math.cos(Date.now() / 5000);
+
   renderer.render(scene, camera);
   renderer.setAnimationLoop(animate);
 };
@@ -159,8 +167,9 @@ function addSnowFlakes() {
     map: textureLoader.load('./images/snowflake1.png'),
     blending: AdditiveBlending,
     depthTest: false,
+    depthWrite: true,
     transparent: true,
-    opacity: 0.7,
+    opacity: 0.9,
   });
 
   snowFlakes = new Points(snowGeometry, flakeMaterial);
@@ -190,7 +199,7 @@ function addSnowFlakes() {
 }
 
 const createUniverse = () => {
-  // 우주 만들기
+  // // 우주 만들기
   const universeMap = new TextureLoader().load('./images/starfield.png');
   const universeSphereGeometry = new SphereGeometry(100, 32, 32);
   const universeMaterial = new MeshPhongMaterial({
@@ -201,6 +210,7 @@ const createUniverse = () => {
   });
 
   universeMesh = new Mesh(universeSphereGeometry, universeMaterial);
+  universeMesh.receiveShadow = false;
 
   universeMesh.position.set(0, 0, 0);
 
@@ -216,6 +226,38 @@ const createUniverse = () => {
 
   loopRotationUniverse();
 
+  // Add Sky
+  // const sky = new Sky();
+  // sky.scale.setScalar(450000);
+  // scene.add(sky);
+
+  // const sun = new Vector3();
+
+  // const effectController = {
+  //   turbidity: 10,
+  //   rayleigh: 3,
+  //   mieCoefficient: 0.005,
+  //   mieDirectionalG: 0.7,
+  //   elevation: 2,
+  //   azimuth: 180,
+  //   exposure: renderer.toneMappingExposure,
+  // };
+
+  // const uniforms = sky.material.uniforms;
+  // uniforms['turbidity'].value = effectController.turbidity;
+  // uniforms['rayleigh'].value = effectController.rayleigh;
+  // uniforms['mieCoefficient'].value = effectController.mieCoefficient;
+  // uniforms['mieDirectionalG'].value = effectController.mieDirectionalG;
+
+  // const phi = MathUtils.degToRad(90 - effectController.elevation);
+  // const theta = MathUtils.degToRad(effectController.azimuth);
+
+  // sun.setFromSphericalCoords(1, phi, theta);
+
+  // uniforms['sunPosition'].value.copy(sun);
+
+  // renderer.toneMappingExposure = effectController.exposure;
+
   // 구름 만들기
 
   const cloudMap = new TextureLoader().load('./images/earth-cloud.jpg');
@@ -226,7 +268,7 @@ const createUniverse = () => {
     transparent: true,
     opacity: 0.3,
   });
-  const cloudGeometry = new SphereGeometry(20.5, 32, 32);
+  const cloudGeometry = new SphereGeometry(20.1, 32, 32);
   cloud = new Mesh(cloudGeometry, cloudMaterial);
   cloud.position.set(0, 0, 0);
   scene.add(cloud);
@@ -242,7 +284,7 @@ const createUniverse = () => {
 
   // earth
   const earthMap = new TextureLoader().load('./images/earth-map.jpg');
-  const material_earth = new MeshPhongMaterial({
+  const material_earth = new MeshStandardMaterial({
     map: earthMap,
     depthWrite: true,
     side: FrontSide,
@@ -251,6 +293,7 @@ const createUniverse = () => {
   earth = new Mesh(geometry_earth, material_earth);
   earth.position.set(0, 0, 0);
   earth.rotation.x = 0.3;
+  earth.castShadow = false;
   scene.add(earth);
 
   const loopRotationEarth = () => {
@@ -303,7 +346,32 @@ const init = () => {
   camera.position.set(0, 0, 10);
   scene.add(camera);
 
+  // const controls = new OrbitControls(camera, renderer.domElement);
+
+  pointLight = new PointLight(0xffffff, 5, 1000);
+  pointLight.position.set(50, 100, 50);
+  scene.add(pointLight);
+
+  // const pointLightHelper = new PointLightHelper(pointLight, 50);
+  // scene.add(pointLightHelper);
+
   animate();
+
+  // const spotLight = new SpotLight(0xffffff, 10, 1000, Math.PI / 3);
+
+  // spotLight.position.set(-500, 0, 100);
+
+  // scene.add(spotLight);
+
+  // const spotLightHelper = new SpotLightHelper(spotLight);
+  // scene.add(spotLightHelper);
+
+  // const directionalLight = new DirectionalLight(0xffffff, 2);
+  // directionalLight.position.set(-500, 500, 0);
+  // scene.add(directionalLight);
+
+  // const directionalLightHelper = new DirectionalLightHelper(directionalLight, 10);
+  // scene.add(directionalLightHelper);
 
   ambientLight = new AmbientLight('white', 0.5);
   scene.add(ambientLight);
@@ -313,6 +381,12 @@ const init = () => {
   createUniverse();
 
   addSnowFlakes();
+
+  // Dat GUI
+  // const gui = new dat.GUI();
+  // gui.add(pointLight.position, 'y', -100, 100, 0.01).name('y 위치');
+  // gui.add(pointLight.position, 'x', -100, 100, 0.01).name('x 위치');
+  // gui.add(pointLight.position, 'z', -100, 100, 0.01).name('z 위치');
 
   setTimeout(loadingComplete, 500);
 };

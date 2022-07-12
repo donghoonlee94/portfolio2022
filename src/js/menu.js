@@ -45,13 +45,16 @@ const menuAnimation = () => {
   tlBtn.reversed() ? tlBtn.play() : tlBtn.reverse();
   tlNav.reversed() ? tlNav.play() : tlNav.reverse();
   tNavItems.reversed() ? tNavItems.play() : tNavItems.reverse();
+  navBody.style = 'display: none';
 
   menuBtn.addEventListener('click', () => {
     isClicked = !isClicked;
     if (isClicked) {
       body.style = 'overflow: hidden';
+      navBody.style = 'display: block';
     } else {
       body.style = 'overflow: scroll';
+      gsap.to(navBody, { duration: 2, display: 'none' });
     }
     tlBtn.reversed() ? tlBtn.play() : tlBtn.reverse();
     tlNav.reversed() ? tlNav.play() : tlNav.reverse();

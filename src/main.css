@@ -134,7 +134,7 @@ img {
 .menu-toggle {
   display: block;
   width: 32px;
-  height: 1.5px;
+  height: 2px;
   margin-bottom: 0.3rem;
   background-color: #fff;
   z-index: 9999;
